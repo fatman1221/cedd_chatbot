@@ -1,0 +1,18 @@
+x-common: &common
+  pull_policy: always # always, never, missing, build
+  restart: unless-stopped
+  stop_signal: SIGINT
+  stop_grace_period: 1s
+  logging:
+    driver: "json-file"
+    options:
+      max-file: "10"
+      max-size: "100m"
+
+services:
+  cedd-demo:
+    image: localhost:5000/cedd_chat_ui:v0.3
+    container_name: cedd-demo
+    ports:
+      - 10500:443
+    <<: *common
