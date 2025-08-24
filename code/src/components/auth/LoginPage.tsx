@@ -32,7 +32,9 @@ export const LoginPage: React.FC = () => {
         justifyContent: 'center',
         paddingTop: 'clamp(24px, 12.8vh, 138px)',
         boxSizing: 'border-box',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        paddingLeft: '16px',
+        paddingRight: '16px'
       }}
     >
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>

@@ -52,36 +52,41 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     <div 
       style={{ 
         // .block_1 from provided CSS
-        height: '804px',
-        backgroundImage: "url('https://lanhu-oss-proxy.lanhuapp.com/SketchPng218a48e28d5ecd4fbdd20e6173297680ab2aa3b0903807ab77a2015f303cc557')",
-        backgroundPosition: '-12px -6px',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: '774px 828px',
-        width: '750px',
+        minHeight: 'min(804px, 95vh)',
+        background: 'linear-gradient(181deg, #D5E2FF 0%, rgba(255,255,255,0.35) 100%)',
+        width: '100%',
+        maxWidth: '750px',
         margin: '0 auto',
-        position: 'relative'
+        position: 'relative',
+        padding: '0 16px',
+        boxSizing: 'border-box',
+        borderRadius: '16px',
+        border: '1px solid rgba(16,65,243,0.37)',
+        boxShadow: '0px 6px 12px 0px rgba(0,0,0,0.06)',
+        backdropFilter: 'blur(10px)',
+        overflow: 'hidden'
       }}
     >
       <div 
         style={{ 
           // .group_1 from provided CSS
-          width: '750px',
-          height: '804px',
-          backgroundImage: "url('https://lanhu-oss-proxy.lanhuapp.com/SketchPng9a6d50bddca539650da3ab03fcec0f6a058d5a5df5cab286bc00bfeb7a37b655')",
-          backgroundPosition: '100% 0',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '100% 100%',
+          width: '100%',
+          minHeight: 'min(804px, 95vh)',
+          background: 'transparent',
           paddingTop: '12px',
-          boxSizing: 'border-box'
+          boxSizing: 'border-box',
+          display: 'flex',
+          flexDirection: 'column'
         }}
       >
           {/* .box_7 - Header with Logo and Title */}
           <div 
             className="flex justify-between"
             style={{ 
-              width: '609px',
+              width: '100%',
+              maxWidth: '609px',
               height: '59px',
-              margin: '50px 0 0 46px',
+              margin: '50px auto 0 auto',
               alignItems: 'center',
               gap: '12px'
             }}
@@ -89,20 +94,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <img 
               src={logo} 
               alt="CEDD Logo" 
-              style={{ width: '61px', height: '59px', objectFit: 'contain', marginTop: '6px' }}
+              style={{ width: '48px', height: '48px', objectFit: 'contain', marginTop: '6px' }}
             />
             <span 
               style={{ 
-                width: '530px',
-                height: '44px',
+                width: '100%',
+                maxWidth: '530px',
+                height: 'auto',
                 overflowWrap: 'break-word',
                 color: 'rgba(0, 0, 0, 1)',
-                fontSize: '36px',
+                fontSize: 'clamp(20px, 5vw, 32px)',
                 fontFamily: 'Montserrat-ExtraBold',
                 fontWeight: 'normal',
                 textAlign: 'left',
-                whiteSpace: 'nowrap',
-                lineHeight: '44px',
+                whiteSpace: 'normal',
+                lineHeight: '1.3',
                 marginTop: '9px'
               }}
             >
@@ -111,28 +117,29 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md flex items-center" style={{ margin: '24px 0 0 52px', width: '646px' }}>
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md flex items-center" style={{ margin: '24px auto 0 auto', width: '100%', maxWidth: '646px' }}>
               <AlertCircle className="h-5 w-5 text-red-500 mr-2" />
               <span className="text-red-700 text-sm">{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
             {/* .text_2 - Mail Label */}
             <span 
               style={{ 
-                width: '52px',
-                height: '12px',
+                width: '100%',
+                height: 'auto',
                 overflowWrap: 'break-word',
                 color: 'rgba(0, 0, 0, 1)',
-                fontSize: '24px',
+                fontSize: 'clamp(14px, 3.2vw, 20px)',
                 fontFamily: 'Montserrat-SemiBold',
                 fontWeight: 'normal',
                 textAlign: 'left',
-                whiteSpace: 'nowrap',
-                lineHeight: '12px',
-                margin: '51px 0 0 53px',
-                display: 'block'
+                whiteSpace: 'normal',
+                lineHeight: '1.2',
+                margin: '24px auto 0',
+                display: 'block',
+                maxWidth: '646px'
               }}
             >
               Mail
@@ -144,9 +151,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               style={{ 
                 backgroundColor: 'rgba(129, 133, 143, 0.16)',
                 borderRadius: '6px',
-                height: '76px',
-                width: '646px',
-                margin: '24px 0 0 52px',
+                height: '56px',
+                width: '100%',
+                maxWidth: '646px',
+                margin: '12px auto 0',
                 position: 'relative'
               }}
             >
@@ -163,12 +171,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   border: 'none',
                   background: 'transparent',
                   color: 'rgba(0, 0, 0, 1)',
-                  fontSize: '16px',
+                  fontSize: 'clamp(14px, 3.2vw, 16px)',
                   fontFamily: 'Montserrat-Regular',
                   fontWeight: 'normal',
                   textAlign: 'left',
-                  whiteSpace: 'nowrap',
-                  lineHeight: '16px',
+                  whiteSpace: 'normal',
+                  lineHeight: '1.2',
                   padding: '0 16px',
                   outline: 'none'
                 }}
@@ -179,18 +187,19 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             {/* .text_4 - Password Label */}
             <span 
               style={{ 
-                width: '121px',
-                height: '12px',
+                width: '100%',
+                height: 'auto',
                 overflowWrap: 'break-word',
                 color: 'rgba(0, 0, 0, 1)',
-                fontSize: '24px',
+                fontSize: 'clamp(14px, 3.2vw, 20px)',
                 fontFamily: 'Montserrat-SemiBold',
                 fontWeight: 'normal',
                 textAlign: 'left',
-                whiteSpace: 'nowrap',
-                lineHeight: '12px',
-                margin: '32px 0 0 53px',
-                display: 'block'
+                whiteSpace: 'normal',
+                lineHeight: '1.2',
+                margin: '16px auto 0',
+                display: 'block',
+                maxWidth: '646px'
               }}
             >
               Password
@@ -200,9 +209,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <div 
               className="flex-col justify-between"
               style={{ 
-                width: '646px',
-                height: '112px',
-                margin: '24px 0 0 52px'
+                width: '100%',
+                maxWidth: '646px',
+                height: 'auto',
+                margin: '12px auto 0'
               }}
             >
               {/* .group_2 - Password Input */}
@@ -210,8 +220,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 style={{ 
                   backgroundColor: 'rgba(129, 133, 143, 0.16)',
                   borderRadius: '6px',
-                  width: '646px',
-                  height: '76px',
+                  width: '100%',
+                  height: '56px',
                   position: 'relative',
                   display: 'flex',
                   alignItems: 'center'
@@ -225,16 +235,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                   value={formData.password}
                   onChange={handleChange}
                   style={{ 
-                    width: 'calc(100% - 60px)',
+                    width: 'calc(100% - 48px)',
                     height: '100%',
                     border: 'none',
                     background: 'transparent',
                     color: 'rgba(0, 0, 0, 1)',
-                    fontSize: '16px',
+                    fontSize: 'clamp(14px, 3.2vw, 16px)',
                     fontFamily: 'Montserrat-Regular',
                     fontWeight: 'normal',
                     textAlign: 'left',
-                    lineHeight: '16px',
+                    lineHeight: '1.2',
                     paddingLeft: '16px',
                     outline: 'none'
                   }}
@@ -247,7 +257,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                     width: '24px',
                     height: '24px',
                     position: 'absolute',
-                    right: '18px',
+                    right: '12px',
                     border: 'none',
                     background: 'transparent',
                     cursor: 'pointer',
@@ -269,17 +279,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 type="button"
                 onClick={onForgotPassword}
                 style={{ 
-                  width: '167px',
-                  height: '19px',
+                  width: 'auto',
+                  height: 'auto',
                   overflowWrap: 'break-word',
                   color: 'rgba(16, 65, 243, 1)',
-                  fontSize: '16px',
+                  fontSize: 'clamp(13px, 3vw, 16px)',
                   fontFamily: 'Montserrat-Regular',
                   fontWeight: 'normal',
                   textAlign: 'left',
-                  whiteSpace: 'nowrap',
-                  lineHeight: '19px',
-                  margin: '17px 0 0 5px',
+                  whiteSpace: 'normal',
+                  lineHeight: '1.2',
+                  margin: '8px 0 0 5px',
                   border: 'none',
                   background: 'transparent',
                   cursor: 'pointer'
@@ -296,19 +306,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               style={{ 
                 backgroundColor: 'rgba(124, 163, 255, 1)',
                 borderRadius: '8px',
-                height: '76px',
-                width: '650px',
-                margin: '48px 0 0 48px',
+                height: '56px',
+                width: '100%',
+                maxWidth: '650px',
+                margin: '24px auto 0',
                 border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: 'rgba(255, 255, 255, 1)',
-                fontSize: '24px',
+                fontSize: 'clamp(16px, 3.6vw, 20px)',
                 fontFamily: 'Montserrat-Black',
                 fontWeight: 'normal',
-                lineHeight: '29px'
+                lineHeight: '1.2'
               }}
             >
               {loading ? 'Logging in...' : 'Log in'}
@@ -317,9 +328,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             {/* .box_8 - OR Divider */}
             <div 
               style={{ 
-                width: '646px',
+                width: '100%',
+                maxWidth: '646px',
                 height: '22px',
-                margin: '32px 0 0 52px',
+                margin: '20px auto 0',
                 display: 'flex',
                 alignItems: 'center'
               }}
@@ -328,10 +340,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               <span 
                 style={{ 
                   color: 'rgba(107, 105, 105, 1)',
-                  fontSize: '16px',
+                  fontSize: 'clamp(13px, 3vw, 16px)',
                   fontFamily: 'PingFangSC-Regular',
-                  lineHeight: '22px',
-                  margin: '0 34px'
+                  lineHeight: '1.2',
+                  margin: '0 16px'
                 }}
               >
                 OR
@@ -343,9 +355,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             <div 
               className="flex-col justify-between"
               style={{ 
-                width: '650px',
-                height: '111px',
-                margin: '21px 0 41px 48px'
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                maxWidth: '650px',
+                height: 'auto',
+                margin: '20px auto 20px'
               }}
             >
               {/* .text-wrapper_3 - SSO Button */}
@@ -354,18 +369,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 style={{ 
                   backgroundColor: 'rgba(255, 255, 255, 1)',
                   borderRadius: '8px',
-                  height: '76px',
+                  height: '56px',
                   border: '1px solid rgba(234, 234, 236, 1)',
-                  width: '650px',
+                  width: '100%',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: 'rgba(115, 117, 120, 1)',
-                  fontSize: '16px',
+                  fontSize: 'clamp(13px, 3vw, 16px)',
                   fontFamily: 'Montserrat-SemiBold',
                   fontWeight: 'normal',
-                  lineHeight: '19px'
+                  lineHeight: '1.2'
                 }}
               >
                 Log in with SSO
@@ -376,17 +391,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({
                 type="button"
                 onClick={onSwitchToRegister}
                 style={{ 
-                  width: '253px',
-                  height: '19px',
+                  width: 'auto',
+                  height: 'auto',
                   overflowWrap: 'break-word',
                   color: 'rgba(16, 65, 243, 1)',
-                  fontSize: '16px',
+                  fontSize: 'clamp(13px, 3vw, 16px)',
                   fontFamily: 'Montserrat-Regular',
                   fontWeight: 'normal',
-                  textAlign: 'left',
-                  whiteSpace: 'nowrap',
-                  lineHeight: '19px',
-                  margin: '16px 0 0 393px',
+                  textAlign: 'right',
+                  whiteSpace: 'normal',
+                  lineHeight: '1.2',
+                  margin: '16px 0 0 0',
+                  alignSelf: 'flex-end',
                   border: 'none',
                   background: 'transparent',
                   cursor: 'pointer'
