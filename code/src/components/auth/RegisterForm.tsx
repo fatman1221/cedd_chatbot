@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, Mail, Lock, AlertCircle, CheckCircle, User } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { authService, RegisterRequest } from '../../services/authService';
+import logo from '../assets/logo.png';
 
 interface RegisterFormProps {
   onSuccess: (message: string) => void;
@@ -21,6 +22,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     confirm_password: '',
     role: 'regular',
   });
+  const [acceptTerms, setAcceptTerms] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -40,6 +42,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 
     if (formData.password.length < 6) {
       setError(t('passwordTooShort'));
+      setLoading(false);
+      return;
+    }
+
+    if (!acceptTerms) {
+      setError('Please agree to the Terms of Service and Privacy Policy');
       setLoading(false);
       return;
     }
@@ -67,11 +75,47 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="bg-white rounded-lg shadow-lg p-8">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900">{t('registerToCEDD')}</h2>
-          <p className="text-gray-600 mt-2">{t('createNewAccount')}</p>
+    <div 
+      style={{ 
+        position: 'relative',
+        width: '750px',
+        height: '879px',
+        margin: '0 auto'
+      }}
+    >
+      <div 
+        style={{ 
+          width: '750px',
+          height: '879px',
+          background: 'linear-gradient(181deg, #D5E2FF 0%, rgba(255,255,255,0.35) 100%)',
+          boxShadow: '0px 6px 12px 0px rgba(0,0,0,0.06)',
+          borderRadius: '16px',
+          border: '1px solid rgba(16,65,243,0.37)',
+          backdropFilter: 'blur(10px)',
+          paddingTop: '12px',
+          boxSizing: 'border-box'
+        }}
+      >
+        {/* Header with CEDD Logo */}
+        <div className="flex items-center" style={{ width: '609px', height: '59px', margin: '48px 0 0 46px', gap: '12px' }}>
+          <img src={logo} alt="CEDD Logo" style={{ width: '61px', height: '59px' }} />
+          <span 
+            style={{ 
+              width: '530px',
+              height: '44px',
+              color: 'rgba(0, 0, 0, 1)',
+              fontSize: '36px',
+              fontFamily: 'Montserrat-ExtraBold',
+              fontWeight: 'normal',
+              textAlign: 'left',
+              whiteSpace: 'nowrap',
+              lineHeight: '44px',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            Log in to the CEDD Chatbot
+          </span>
         </div>
 
         {error && (
@@ -81,141 +125,68 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              {t('emailAddress')}
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                placeholder={t('emailAddress')}
-              />
-            </div>
+        <form onSubmit={handleSubmit}>
+          {/* Mail */}
+          <span style={{ width: '52px', height: '12px', color: '#000', fontSize: '24px', fontFamily: 'Montserrat-SemiBold', lineHeight: '12px', margin: '35px 0 0 53px', display: 'block' }}>Mail</span>
+          <div style={{ backgroundColor: 'rgba(129,133,143,0.16)', borderRadius: '6px', height: '76px', width: '646px', margin: '24px 0 0 52px' }}>
+            <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange}
+              style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', padding: '30px 0 0 16px', outline: 'none', fontSize: '16px', color: '#000', fontFamily: 'Montserrat-Regular' }} placeholder="Please enter" />
           </div>
 
-          <div>
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">
-              {t('userRole')}
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <User className="h-5 w-5 text-gray-400" />
-              </div>
-              <select
-                id="role"
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="regular">{t('regularUser')}</option>
-                <option value="root" disabled className="text-gray-400">
-                  {t('admin')}
-                </option>
+          {/* Company Position - merged agree text into one line group only once */}
+          <span style={{ width: '228px', height: '12px', color: '#000', fontSize: '24px', fontFamily: 'Montserrat-SemiBold', lineHeight: '12px', margin: '24px 0 0 53px', display: 'block' }}>Company Position</span>
+          <div style={{ width: '646px', height: '112px', margin: '24px 0 0 52px' }}>
+            <div style={{ backgroundColor: 'rgba(129,133,143,0.16)', borderRadius: '6px', width: '646px', height: '76px', position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <select id="role" name="role" value={formData.role} onChange={handleChange}
+                style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', paddingLeft: '16px', paddingRight: '60px', outline: 'none', fontSize: '24px', color: '#000', fontFamily: 'Montserrat-Regular', appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none' }}>
+                <option value="regular">Regular user</option>
+                <option value="manager">Manager</option>
+                <option value="director">Director</option>
+                <option value="executive">Executive</option>
               </select>
+              <div style={{ position: 'absolute', right: '18px', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+                <ChevronDown className="h-5 w-5 text-gray-400" />
+              </div>
             </div>
-            <p className="mt-1 text-xs text-gray-500">
-              {t('regularUserDescription')}
-            </p>
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              {t('password')}
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                required
-                value={formData.password}
-                onChange={handleChange}
-                className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                placeholder={t('enterPassword')}
-              />
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="text-gray-400 hover:text-gray-600 focus:outline-none"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                  ) : (
-                    <Eye className="h-5 w-5" />
-                  )}
-                </button>
-              </div>
+            <div style={{ width: '590px', margin: '17px 0 0 5px', fontSize: 0 }}>
+              <span style={{ color: 'rgba(107,105,105,1)', fontSize: '16px', lineHeight: '19px', fontFamily: 'Montserrat-Regular' }}>By signing up, you agree to AI agent's </span>
+              <span style={{ color: 'rgba(16,65,243,1)', fontSize: '16px', lineHeight: '19px', fontFamily: 'Montserrat-Regular' }}>Terms of Service</span>
+              <span style={{ color: 'rgba(107,105,105,1)', fontSize: '16px', lineHeight: '19px', fontFamily: 'Montserrat-Regular' }}> and </span>
+              <span style={{ color: 'rgba(16,65,243,1)', fontSize: '16px', lineHeight: '19px', fontFamily: 'Montserrat-Regular' }}>Privacy Policy</span>
+              <span style={{ color: 'rgba(107,105,105,1)', fontSize: '16px', lineHeight: '19px', fontFamily: 'Montserrat-Regular' }}>.</span>
             </div>
           </div>
 
-          <div>
-            <label htmlFor="confirm_password" className="block text-sm font-medium text-gray-700 mb-2">
-              {t('confirmPassword')}
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                id="confirm_password"
-                name="confirm_password"
-                type={showConfirmPassword ? 'text' : 'password'}
-                required
-                value={formData.confirm_password}
-                onChange={handleChange}
-                className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                placeholder={t('enterPasswordAgain')}
-              />
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="text-gray-400 hover:text-gray-600 focus:outline-none"
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                  ) : (
-                    <Eye className="h-5 w-5" />
-                  )}
-                </button>
-              </div>
-            </div>
+          {/* removed duplicate By signing up... block */}
+
+          {/* Password */}
+          <span style={{ width: '121px', height: '12px', color: '#000', fontSize: '24px', fontFamily: 'Montserrat-SemiBold', lineHeight: '12px', margin: '32px 0 0 53px', display: 'block' }}>Password</span>
+          <div style={{ backgroundColor: 'rgba(129,133,143,0.16)', borderRadius: '6px', width: '646px', height: '76px', margin: '24px 0 0 52px', position: 'relative', display: 'flex', alignItems: 'center' }}>
+            <input id="password" name="password" type={showPassword ? 'text' : 'password'} required value={formData.password} onChange={handleChange}
+              style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', padding: '0 16px', outline: 'none', fontSize: '16px', color: '#000', fontFamily: 'Montserrat-Regular', lineHeight: 'normal' }} placeholder="Please enter" />
+            <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '18px', width: '24px', height: '24px', border: 'none', background: 'transparent', cursor: 'pointer' }}>
+              {showPassword ? (<EyeOff className="h-5 w-5 text-gray-400" />) : (<Eye className="h-5 w-5 text-gray-400" />)}
+            </button>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? t('registering') : t('register')}
-          </button>
+          {/* Confirm password */}
+          <span style={{ width: '308px', height: '12px', color: '#000', fontSize: '24px', fontFamily: 'Montserrat-SemiBold', lineHeight: '12px', margin: '24px 0 0 53px', display: 'block' }}>Confirm the secret again</span>
+          <div style={{ backgroundColor: 'rgba(129,133,143,0.16)', borderRadius: '6px', width: '646px', height: '76px', margin: '24px 0 0 52px', position: 'relative', display: 'flex', alignItems: 'center' }}>
+            <input id="confirm_password" name="confirm_password" type={showConfirmPassword ? 'text' : 'password'} required value={formData.confirm_password} onChange={handleChange}
+              style={{ width: '100%', height: '100%', border: 'none', background: 'transparent', padding: '0 16px', outline: 'none', fontSize: '16px', color: '#000', fontFamily: 'Montserrat-Regular', lineHeight: 'normal' }} placeholder="Please enter" />
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} style={{ position: 'absolute', right: '18px', width: '24px', height: '24px', border: 'none', background: 'transparent', cursor: 'pointer' }}>
+              {showConfirmPassword ? (<EyeOff className="h-5 w-5 text-gray-400" />) : (<Eye className="h-5 w-5 text-gray-400" />)}
+            </button>
+          </div>
 
-          <div className="text-center">
-            <span className="text-sm text-gray-600">
-              {t('alreadyHaveAccount')}{' '}
-              <button
-                type="button"
-                onClick={onSwitchToLogin}
-                className="text-blue-600 hover:text-blue-500 font-medium"
-              >
-                {t('loginNow')}
-              </button>
-            </span>
+          {/* Footer buttons */}
+          <div style={{ width: '650px', height: '121px', margin: '24px 0 28px 50px' }}>
+            <button type="submit" disabled={loading} style={{ backgroundColor: 'rgba(124,163,255,1)', borderRadius: '8px', height: '76px', width: '650px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '24px', fontFamily: 'Montserrat-Black' }}>
+              {loading ? 'Registering...' : 'Register'}
+            </button>
+            <button type="button" onClick={onSwitchToLogin} style={{ width: '335px', height: '29px', color: '#1041F3', fontSize: '24px', fontFamily: 'Inter, Inter', fontWeight: 400, lineHeight: '29px', margin: '16px 0 0 315px', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left' }}>
+              Have an account? Log in now
+            </button>
           </div>
         </form>
       </div>

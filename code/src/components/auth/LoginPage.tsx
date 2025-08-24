@@ -22,12 +22,28 @@ export const LoginPage: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <LoginForm
-        onSuccess={handleLoginSuccess}
-        onSwitchToRegister={handleSwitchToRegister}
-        onForgotPassword={handleForgotPassword}
-      />
+    <div 
+      style={{ 
+        backgroundColor: 'rgba(245, 247, 255, 1)',
+        minHeight: '100vh',
+        width: '100vw',
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        paddingTop: 'clamp(24px, 12.8vh, 138px)',
+        boxSizing: 'border-box',
+        overflow: 'hidden'
+      }}
+    >
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <LoginForm
+          onSuccess={handleLoginSuccess}
+          onSwitchToRegister={handleSwitchToRegister}
+          onForgotPassword={handleForgotPassword}
+        />
+      </div>
     </div>
   );
 };
+
+export default LoginPage;
